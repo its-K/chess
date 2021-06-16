@@ -107,15 +107,19 @@ King.prototype.checkCastling=function(moves,i,j){
         //for short castling
         if((i+","+(j+3) in game.matrix) && game.matrix[i+","+(j+3)].coinType=="Rook"){
             if(!(i+","+(j+1) in game.matrix) && !(i+","+(j+2) in game.matrix)){
-                moves.push([i,j+2]);
-                this.isCastingAllowed=true;
+                if(this.checkMoveValid(i,j+2)){
+                    moves.push([i,j+2]);
+                    this.isCastingAllowed=true;
+                }
             }
         }
         //for long castling
         if((i+","+(j-4) in game.matrix) && game.matrix[i+","+(j-4)].coinType=="Rook"){
             if(!(i+","+(j-1) in game.matrix) && !(i+","+(j-2) in game.matrix) && !(i+","+(j-3) in game.matrix)){
-                moves.push([i,j-2]);
-                this.isCastingAllowed=true;
+                if(this.checkMoveValid(i,j-2)){
+                    moves.push([i,j-2]);
+                    this.isCastingAllowed=true;
+                }
             }
         }
     }

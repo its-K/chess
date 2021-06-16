@@ -63,7 +63,7 @@ Board.prototype.checkAndDoPawnPromotion=function(i,j){
     }
 }
 
-Board.prototype.checkAndDoCastling=function(i,j){
+Board.prototype.checkAndDoCastling=function(j){
     if(this.selectedPiece.coinType=="King" && this.selectedPiece.isCastingAllowed){
         var xpos=this.selectedPiece.position[0];
         var ypos=this.selectedPiece.position[1];
@@ -74,7 +74,23 @@ Board.prototype.checkAndDoCastling=function(i,j){
     }
 }
 
+Board.prototype.checkAndDoEnPassant=function(i,j){
+    if(this.selectedPiece.coinType=="Pawn" && this.selectedPiece.isEnPassantAllowed){
+        if(this.selectedPiece.isWhite()){
+            if(this.selectedPiece.position[1]!=j && !(i+","+j in this.matrix)) {
+                delete this.matrix[(i+1)+","+(j)];
+            }
+        }
+        else{
+            if(this.selectedPiece.position[1]!=j && !(i+","+j in this.matrix)) {
+                delete this.matrix[(i-1)+","+(j+1)];
+            }
+        }
+    }
+}
+
 Board.prototype.checkSpecialMoves=function(i,j){
     this.checkAndDoPawnPromotion(i,j);
-    this.checkAndDoCastling(i,j);
+    this.checkAndDoCastling(j);
+    this.checkAndDoEnPassant(i,j);
 }

@@ -3,7 +3,7 @@ function Pawn(type,position){
     Piece.call(this,type);
     this.coinType="Pawn";
     this.position=position;
-    this.isEnPasant=false;
+    this.isEnPassantAllowed=false;
 }
 
 Pawn.prototype.getPossibleMoves=function(){
@@ -53,29 +53,22 @@ Pawn.prototype.checkDownToUpAndAdd=function(moves,i,j){
 Pawn.prototype.checkEnPasant=function(moves,i,j){
     //for white coin
     if(game.matrix[i+","+j].isWhite() && i==3){
-        console.log("White enpasant")
         if(j-1>=0){
             if(i+","+(j-1) in game.matrix && game.matrix[i+","+(j-1)].coinType=="Pawn" && !((i-1)+","+(j-1) in game.matrix)){
                 moves.push([i-1,j-1]);
+                this.isEnPassantAllowed=true;
             }
-        }
-        if(j+1<8){
-            if(i+","+(j+1) in game.matrix && game.matrix[i+","+(j+1)].coinType=="Pawn" && !((i-1)+","+(j+1) in game.matrix)){
-                moves.push([i-1,j+1]);
-            }
+            else this.isEnPassantAllowed=false;
         }
     }
     //for black coin
     if(!game.matrix[i+","+j].isWhite() && i==4){
-        if(j-1>=0){
-            if(i+","+(j-1) in game.matrix && game.matrix[i+","+(j-1)].coinType=="Pawn" && !((i+1)+","+(j-1) in game.matrix)){
-                moves.push([i+1,j-1]);
-            }
-        }
         if(j+1<8){
             if(i+","+(j+1) in game.matrix && game.matrix[i+","+(j+1)].coinType=="Pawn" && !((i+1)+","+(j+1) in game.matrix)){
                 moves.push([i+1,j+1]);
+                this.isEnPassantAllowed=true;
             }
+            else this.isEnPassantAllowed=false;
         }
     }
 
