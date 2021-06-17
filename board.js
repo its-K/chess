@@ -2,6 +2,7 @@
 function Board(){
     this.matrix={};
     this.selectedPiece;
+    this.curPlayerIsWhite=true;
     //black coins
     this.matrix[0+","+0]=new Rook(false,[0,0]);
     this.matrix[0+","+1]=new Knight(false,[0,1]);
@@ -27,8 +28,10 @@ function Board(){
 }
 
 Board.prototype.selectPiece=function(i,j){
-    this.selectedPiece=this.matrix[i+","+j];
-    console.log("Coin selected");
+    if(this.matrix[i+","+j]!=undefined && this.matrix[i+","+j].isWhite()==this.curPlayerIsWhite){
+        this.selectedPiece=this.matrix[i+","+j];
+        console.log("Coin selected");
+    }
 }
 
 Board.prototype.moveSelectedPiece=function(i,j){
@@ -45,10 +48,11 @@ Board.prototype.moveSelectedPiece=function(i,j){
             delete this.matrix[curPos[0]+","+curPos[1]];
             
             this.checkSpecialMoves(i,j);
-            if(this.checkKingUnderCheck(!this.selectedPiece.isWhite())) alert("Check");
+            if(Piece.prototype.checkKingUnderCheck(!this.selectedPiece.isWhite())) alert("Check");
             this.clearSelectedPiece();
             isPieceMoved=true;
             console.log("Coin moved");
+            this.curPlayerIsWhite=!this.curPlayerIsWhite;
         }
     });
     if(!isPieceMoved) alert("Move not possible");

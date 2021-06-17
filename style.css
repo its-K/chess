@@ -1,0 +1,19 @@
+
+.chessboard {
+    margin: 20px;
+    border: 25px solid #333;
+}
+.black {
+    float: left;
+    background-color: #999;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
+.white {
+    float: left;
+    background-color: #fff;
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}
