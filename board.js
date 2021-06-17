@@ -38,10 +38,14 @@ Board.prototype.moveSelectedPiece=function(i,j){
     possibleMoves.forEach(move => {
         if(move[0]==i && move[1]==j){
             if(this.selectedPiece.coinType=="King") this.selectedPiece.isMoved=true;
+            if(this.selectedPiece.coinType=="Pawn") this.selectedPiece.noOfMoves+=1;
+            
             this.selectedPiece.position=[i,j];
             this.matrix[i+","+j]=this.selectedPiece;
             delete this.matrix[curPos[0]+","+curPos[1]];
+            
             this.checkSpecialMoves(i,j);
+            if(this.checkKingUnderCheck(!this.selectedPiece.isWhite())) alert("Check");
             this.clearSelectedPiece();
             isPieceMoved=true;
             console.log("Coin moved");

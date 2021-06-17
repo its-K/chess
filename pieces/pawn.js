@@ -4,6 +4,7 @@ function Pawn(type,position){
     this.coinType="Pawn";
     this.position=position;
     this.isEnPassantAllowed=false;
+    this.noOfMoves=0;
 }
 
 Pawn.prototype.getPossibleMoves=function(){
@@ -55,8 +56,10 @@ Pawn.prototype.checkEnPasant=function(moves,i,j){
     if(game.matrix[i+","+j].isWhite() && i==3){
         if(j-1>=0){
             if(game.matrix[i+","+(j-1)]!=undefined && game.matrix[i+","+(j-1)].coinType=="Pawn" && game.matrix[(i-1)+","+(j-1)]==undefined){
-                moves.push([i-1,j-1]);
-                this.isEnPassantAllowed=true;
+                if(game.matrix[i+","+(j-1)].noOfMoves==1){
+                    moves.push([i-1,j-1]);
+                    this.isEnPassantAllowed=true;
+                }
             }
             else this.isEnPassantAllowed=false;
         }
@@ -65,8 +68,10 @@ Pawn.prototype.checkEnPasant=function(moves,i,j){
     if(!game.matrix[i+","+j].isWhite() && i==4){
         if(j+1<8){
             if(game.matrix[i+","+(j+1)]!=undefined && game.matrix[i+","+(j+1)].coinType=="Pawn" && game.matrix[(i+1)+","+(j+1)]==undefined){
-                moves.push([i+1,j+1]);
-                this.isEnPassantAllowed=true;
+                if(game.matrix[i+","+(j+1)].noOfMoves==1){
+                    moves.push([i+1,j+1]);
+                    this.isEnPassantAllowed=true;
+                }
             }
             else this.isEnPassantAllowed=false;
         }
