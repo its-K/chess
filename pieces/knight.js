@@ -13,45 +13,45 @@ Knight.prototype.getPossibleMoves=function(){
     return moves;
 }
 
-Knight.prototype.getPossibleLSpots=function(moves,i,j){
+Knight.prototype.getPossibleLSpots=function(moves,i,j){l
     if(i+2<8 && j+1<8){
-        if(!((i+2)+","+(j+1) in game.matrix) || game.matrix[((i+2)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i+2)+","+(j+1)]==undefined || game.matrix[((i+2)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i+2,j+1)) moves.push([i+2,j+1]);
         }
     }
     if(i+2<8 && j-1>=0){
-        if(!((i+2)+","+(j-1) in game.matrix) || game.matrix[((i+2)+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i+2)+","+(j-1)]==undefined || game.matrix[((i+2)+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i+2,j-1)) moves.push([i+2,j-1]);
         }
     }
     if(i-2>=0 && j+1<8){
-        if(!((i-2)+","+(j+1) in game.matrix) || game.matrix[((i-2)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i-2)+","+(j+1)]==undefined || game.matrix[((i-2)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i-2,j+1)) moves.push([i-2,j+1]);
         }
     }
     if(i-2>=0 && j-1>=0){
-        if(!((i-2)+","+(j-1) in game.matrix) || game.matrix[((i-2)+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i-2)+","+(j-1)]==undefined || game.matrix[((i-2)+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i-2,j-1)) moves.push([i-2,j-1]);
         }
     }
 
     if(i+1<8 && j+2<8){
-        if(!((i+1)+","+(j+2) in game.matrix) || game.matrix[((i+1)+","+(j+2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i+1)+","+(j+2)]==undefined || game.matrix[((i+1)+","+(j+2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i+1,j+2)) moves.push([i+1,j+2]);
         }
     }
     if(i-1>=0 && j+2<8){
-        if(!((i-1)+","+(j+2) in game.matrix) || game.matrix[((i-1)+","+(j+2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i-1)+","+(j+2)]==undefined || game.matrix[((i-1)+","+(j+2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i-1,j+2)) moves.push([i-1,j+2]);
         }
     }
     if(i+1<8 && j-2>=0){
-        if(!((i+1)+","+(j-2) in game.matrix) || game.matrix[((i+1)+","+(j-2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i+1)+","+(j-2)]==undefined || game.matrix[((i+1)+","+(j-2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i+1,j-2)) moves.push([i+1,j-2]);
         }
     }
     if(i-1>=0 && j-2>=0){
-        if(!((i-1)+","+(j-2) in game.matrix) || game.matrix[((i-1)+","+(j-2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
+        if(game.matrix[(i-1)+","+(j-2)]==undefined || game.matrix[((i-1)+","+(j-2))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i-1,j-2)) moves.push([i-1,j-2]);
         }
     }

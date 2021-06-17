@@ -14,10 +14,11 @@ Bishop.prototype.getPossibleMoves=function(){
 }
 
 Bishop.prototype.checkRightDiagonalAndAdd=function(moves,i,j){
-    let a=i+1;
-    let b=j+1;
+    //for top left to bottom right
+    var a=i+1;
+    var b=j+1;
     while(a<8 && b<8){
-        if(!(a+","+b in game.matrix)){
+        if(game.matrix[a+","+b]==undefined){
             if(this.checkMoveValid(a,b)) moves.push([a,b]);
             a++;
             b++;
@@ -28,10 +29,11 @@ Bishop.prototype.checkRightDiagonalAndAdd=function(moves,i,j){
         }
         else break;
     }
+    //for bottom right to top left
     a=i-1;
     b=j-1;
     while(a>=0 && b>=0){
-        if(!(a+","+b in game.matrix)){
+        if(game.matrix[a+","+b]==undefined){
             if(this.checkMoveValid(a,b)) moves.push([a,b]);
             a--;
             b--;
@@ -46,10 +48,11 @@ Bishop.prototype.checkRightDiagonalAndAdd=function(moves,i,j){
 }
 
 Bishop.prototype.checkLeftDiagonalAndAdd=function(moves,i,j){
-    a=i-1;
-    b=j+1;
+    //for bottom left to top right
+    var a=i-1;
+    var b=j+1;
     while(a>=0 && b<8){
-        if(!(a+","+b in game.matrix)){
+        if(game.matrix[a+","+b]==undefined){
             if(this.checkMoveValid(a,b)) moves.push([a,b]);
             a--;
             b++;
@@ -60,10 +63,11 @@ Bishop.prototype.checkLeftDiagonalAndAdd=function(moves,i,j){
         }
         else break;
     }
+    // for top right to bottom left 
     a=i+1;
     b=j-1;
     while(a<8 && b>=0){
-        if(!(a+","+b in game.matrix)){
+        if(game.matrix[a+","+b]==undefined){
             if(this.checkMoveValid(a,b)) moves.push([a,b]);
             a++;
             b--;

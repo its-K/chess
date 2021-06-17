@@ -54,11 +54,11 @@ Board.prototype.clearSelectedPiece=function(){
     this.selectedPiece=undefined;
 }
 
-Board.prototype.checkAndDoPawnPromotion=function(i,j){
+Board.prototype.checkAndDoPawnPromotion=function(i,j,coin){
     if(this.matrix[i+","+j].coinType=="Pawn"){
         if(i==0 || i==7){
             var isWhite=this.matrix[i+","+j].isWhite();
-            this.matrix[i+","+j]=new Queen(isWhite,[i,j]);
+            this.matrix[i+","+j]=new coin(isWhite,[i,j]);
         }
     }
 }
@@ -77,12 +77,12 @@ Board.prototype.checkAndDoCastling=function(j){
 Board.prototype.checkAndDoEnPassant=function(i,j){
     if(this.selectedPiece.coinType=="Pawn" && this.selectedPiece.isEnPassantAllowed){
         if(this.selectedPiece.isWhite()){
-            if(this.selectedPiece.position[1]!=j && !(i+","+j in this.matrix)) {
+            if(this.selectedPiece.position[1]!=j && this.matrix[i+","+j]==undefined) {
                 delete this.matrix[(i+1)+","+(j)];
             }
         }
         else{
-            if(this.selectedPiece.position[1]!=j && !(i+","+j in this.matrix)) {
+            if(this.selectedPiece.position[1]!=j && this.matrix[i+","+j]==undefined) {
                 delete this.matrix[(i-1)+","+(j+1)];
             }
         }
@@ -90,7 +90,7 @@ Board.prototype.checkAndDoEnPassant=function(i,j){
 }
 
 Board.prototype.checkSpecialMoves=function(i,j){
-    this.checkAndDoPawnPromotion(i,j);
+    this.checkAndDoPawnPromotion(i,j,"Queen");
     this.checkAndDoCastling(j);
     this.checkAndDoEnPassant(i,j);
 }

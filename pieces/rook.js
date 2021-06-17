@@ -15,7 +15,7 @@ Rook.prototype.getPossibleMoves=function(){
 
 Rook.prototype.checkDownToUpAndAdd=function(moves,i,j){
     for(let a=i-1;a>=0;a--){
-        if(!(a+","+j in game.matrix)){
+        if(game.matrix[a+","+j]==undefined){
             if(this.checkMoveValid(a,j)) moves.push([a,j]);
         }
         else if(game.matrix[a+","+j].isWhite()!=game.matrix[i+","+j].isWhite()){
@@ -25,7 +25,7 @@ Rook.prototype.checkDownToUpAndAdd=function(moves,i,j){
         else break;
     }
     for(let a=i+1;a<8;a++){
-        if(!(a+","+j in game.matrix)){
+        if(game.matrix[a+","+j]==undefined){
             if(this.checkMoveValid(a,j)) moves.push([a,j]);
         }
         else if(game.matrix[(a+","+j)].isWhite()!=game.matrix[(i+","+j)].isWhite()){
@@ -39,7 +39,7 @@ Rook.prototype.checkDownToUpAndAdd=function(moves,i,j){
 
 Rook.prototype.checkLeftToRightAndAdd=function(moves,i,j){
     for(let a=j-1;a>=0;a--){
-        if(!(i+","+a in game.matrix)){
+        if(game.matrix[i+","+a]==undefined){
             if(this.checkMoveValid(i,a)) moves.push([i,a]);
         }
         else if(game.matrix[(i+","+a)].isWhite()!=game.matrix[(i+","+j)].isWhite()){
@@ -49,7 +49,7 @@ Rook.prototype.checkLeftToRightAndAdd=function(moves,i,j){
         else break;
     }
     for(let a=j+1;a<8;a++){
-        if(!(i+","+a in game.matrix)){
+        if(game.matrix[i+","+a]==undefined){
             if(this.checkMoveValid(i,a)) moves.push([i,a]);
         }
         else if(game.matrix[(i+","+a)].isWhite()!=game.matrix[(i+","+j)].isWhite()){

@@ -16,7 +16,7 @@ King.prototype.getPossibleMoves=function(){
 
 King.prototype.checkRightDownAndAdd=function(moves,i,j){
     if(i+1<8 &&j+1<8){
-        if(!((i+1)+","+(j+1) in game.matrix)) {
+        if(game.matrix[(i+1)+","+(j+1)]==undefined) {
             if(this.checkMoveValid(i+1,j+1)) moves.push([i+1,j+1]);
         }
         else if(game.matrix[((i+1)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
@@ -27,7 +27,7 @@ King.prototype.checkRightDownAndAdd=function(moves,i,j){
 
 King.prototype.checkLeftUpAndAdd=function(moves,i,j){
     if(i-1>=0 &&j-1>=0){
-        if(!((i-1)+","+(j-1) in game.matrix)){
+        if(game.matrix[(i-1)+","+(j-1)]==undefined){
             if(this.checkMoveValid(i-1,j-1)) moves.push([i-1,j-1]);
         }
         else if(game.matrix[((i-1)+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()) {
@@ -38,7 +38,7 @@ King.prototype.checkLeftUpAndAdd=function(moves,i,j){
 
 King.prototype.checkRightUpAndAdd=function(moves,i,j){
     if(i-1>=0 && j+1<8){
-        if(!((i-1)+","+(j+1) in game.matrix)) {
+        if(game.matrix[(i-1)+","+(j+1)]==undefined) {
             if(this.checkMoveValid(i-1,j+1)) moves.push([i-1,j+1]);
         }
         else if(game.matrix[((i-1)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()) {
@@ -49,7 +49,7 @@ King.prototype.checkRightUpAndAdd=function(moves,i,j){
 
 King.prototype.checkLeftDownAndAdd=function(moves,i,j){
     if(i+1<8 && j-1>=0){
-        if(!((i+1)+","+(j-1) in game.matrix)){
+        if(game.matrix[(i+1)+","+(j-1)]==undefined){
             if(this.checkMoveValid(i+1,j-1)) moves.push([i+1,j-1]);
         }
         else if(game.matrix[((i+1)+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
@@ -60,7 +60,7 @@ King.prototype.checkLeftDownAndAdd=function(moves,i,j){
 
 King.prototype.checkDownAndAdd=function(moves,i,j){
     if(i+1<8){
-        if(!((i+1)+","+j in game.matrix)){
+        if(game.matrix[(i+1)+","+j]==undefined){
             if(this.checkMoveValid(i+1,j)) moves.push([i+1,j]);
         }
         else if(game.matrix[((i+1)+","+j)].isWhite()!=game.matrix[(i+","+j)].isWhite()) {
@@ -71,7 +71,7 @@ King.prototype.checkDownAndAdd=function(moves,i,j){
 
 King.prototype.checkUpAndAdd=function(moves,i,j){
     if(i-1>=0){
-        if(!((i-1)+","+j in game.matrix)){
+        if(game.matrix[(i-1)+","+j]==undefined){
             if(this.checkMoveValid(i-1,j)) moves.push([i-1,j]);
         }
         else if(game.matrix[((i-1)+","+j)].isWhite()!=game.matrix[(i+","+j)].isWhite()) {
@@ -82,7 +82,7 @@ King.prototype.checkUpAndAdd=function(moves,i,j){
 
 King.prototype.checkRightAndAdd=function(moves,i,j){
     if(j+1<8){
-        if(!(i+","+(j+1) in game.matrix)){
+        if(game.matrix[i+","+(j+1)]==undefined){
             if(this.checkMoveValid(i,j+1)) moves.push([i,j+1]);
         }
         else if(game.matrix[(i+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()) {
@@ -93,7 +93,7 @@ King.prototype.checkRightAndAdd=function(moves,i,j){
 
 King.prototype.checkLeftAndAdd=function(moves,i,j){
     if(j-1>=0){
-        if(!(i+","+(j-1) in game.matrix)){
+        if(game.matrix[i+","+(j-1)]==undefined){
             if(this.checkMoveValid(i,j-1)) moves.push([i,j-1]);
         }
         else if(game.matrix[(i+","+(j-1))].isWhite()!=game.matrix[(i+","+j)].isWhite()) {
@@ -105,8 +105,8 @@ King.prototype.checkLeftAndAdd=function(moves,i,j){
 King.prototype.checkCastling=function(moves,i,j){
     if(!this.isMoved){
         //for short castling
-        if((i+","+(j+3) in game.matrix) && game.matrix[i+","+(j+3)].coinType=="Rook"){
-            if(!(i+","+(j+1) in game.matrix) && !(i+","+(j+2) in game.matrix)){
+        if(game.matrix[i+","+(j+3)]!=undefined && game.matrix[i+","+(j+3)].coinType=="Rook"){
+            if(game.matrix[i+","+(j+1)]==undefined && game.matrix[i+","+(j+2)]==undefined){
                 if(this.checkMoveValid(i,j+2)){
                     moves.push([i,j+2]);
                     this.isCastingAllowed=true;
@@ -114,8 +114,8 @@ King.prototype.checkCastling=function(moves,i,j){
             }
         }
         //for long castling
-        if((i+","+(j-4) in game.matrix) && game.matrix[i+","+(j-4)].coinType=="Rook"){
-            if(!(i+","+(j-1) in game.matrix) && !(i+","+(j-2) in game.matrix) && !(i+","+(j-3) in game.matrix)){
+        if(game.matrix[i+","+(j-4)]!=undefined && game.matrix[i+","+(j-4)].coinType=="Rook"){
+            if(game.matrix[i+","+(j-1)]==undefined && game.matrix[i+","+(j-2)]==undefined && game.matrix[i+","+(j-3)]==undefined){
                 if(this.checkMoveValid(i,j-2)){
                     moves.push([i,j-2]);
                     this.isCastingAllowed=true;
