@@ -2,6 +2,7 @@
 .chessboard {
     margin: 20px;
     border: 25px solid #333;
+    margin: 0 auto;
 }
 .black {
     float: left;

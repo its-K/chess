@@ -4,11 +4,13 @@ function HtmlGame(){
     this.windowHeight=window.innerHeight;
     this.perBoxHeightWidth=0;
     this.coinSize=0;
+    this.container=undefined;
 }
 
-HtmlGame.prototype.createBoard=function(){
+HtmlGame.prototype.createBoard=function(container){
+    this.container=container;
     this.calculateBoardSize();
-    document.querySelector('body').innerHTML=`<div class="chessboard" style="height:${this.windowHeight}px;width:${this.windowWidth}px">`;
+    this.container.innerHTML = `<div class="chessboard" style="height:${this.windowHeight}px;width:${this.windowWidth}px">`;
     var chessboard=document.querySelector('.chessboard');
     for(var i=0;i<8;i++){
         for(var j=0;j<8;j++){
@@ -17,6 +19,7 @@ HtmlGame.prototype.createBoard=function(){
         }
     }
     this.placePieces()
+    this.attachListeners();
 }
 
 HtmlGame.prototype.calculateBoardSize=function(){
@@ -65,7 +68,7 @@ HtmlGame.prototype.removePiece=function(i,j){
 HtmlGame.prototype.selectAndHighlightPiece=function(piece){
     if(game.selectedPiece==undefined){
         var pos=piece.id.split(",");
-        if(game.selectPiece(Number(pos[0]),Number(pos[1]))){
+        if(game.selectPiece(parseInt(pos[0]),parseInt(pos[1]))){
             piece.classList.add("highlight");
             this.highlightPossibleMoves(game.selectedPiece.getPossibleMoves())
         }
@@ -85,26 +88,42 @@ HtmlGame.prototype.selectAndHighlightPiece=function(piece){
 HtmlGame.prototype.highlightPossibleMoves=function(possibleMoves){
     for (var i = 0; i < possibleMoves.length; i++) {
         var move=possibleMoves[i];
-        var Pieces=document.getElementById(`${move[0]},${move[1]}`);
-        Pieces.classList.add("highlight");
+        var pieces=document.getElementById(""+move[0]+","+move[1]);
+        pieces.classList.add("highlight");
     }
 }
 
 HtmlGame.prototype.removeHighlightedMoves=function(possibleMoves){
     for (var i = 0; i < possibleMoves.length; i++) {
         var move=possibleMoves[i];
-        var Pieces=document.getElementById(`${move[0]},${move[1]}`);
+        var Pieces=document.getElementById(""+move[0]+","+move[1]);
         Pieces.classList.remove("highlight");
     }
 }
 
-HtmlGame.prototype.movePiece=function(tagetpiece,sourcepiece,sourcePossibleMoves){
-    var pos=tagetpiece.id.split(",");
-    console.log(sourcepiece)
+HtmlGame.prototype.movePiece=function(targetPiece,sourcePiece,sourcePossibleMoves){
+    var pos=targetPiece.id.split(",");
+    console.log(sourcePiece)
     if(game.moveSelectedPiece(Number(pos[0]),Number(pos[1]))){
         this.removeHighlightedMoves(sourcePossibleMoves)
-        var element=game.matrix[tagetpiece.id]
+        var element=game.matrix[targetPiece.id]
         this.setPiece(element);
-        this.removePiece(sourcepiece.position[0],sourcepiece.position[1]);
+        this.removePiece(sourcePiece.position[0],sourcePiece.position[1]);
+    }
+}
+
+HtmlGame.prototype.getPieces=function(){
+    var pieces=this.container.querySelectorAll(".piece");
+    return pieces;
+}
+
+HtmlGame.prototype.attachListeners=function(){
+    var pieces=this.getPieces()
+    var self=this;
+    for (var i = 0; i < pieces.length; i++) {
+        pieces[i].addEventListener('click', function() {
+            self.selectAndHighlightPiece(this);
+            
+        });
     }
 }

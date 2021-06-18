@@ -1,17 +1,12 @@
 
 var game=new Board();
-window.addEventListener("resize",function(){
-    view.setWindowHeightWidth(window.innerHeight,window.innerWidth);
-    view.createBoard();
-});
+var container = document.querySelector("#chessContainer");
 
 var view=new HtmlGame();
-view.createBoard();
+view.createBoard(container);
 
-//for adding click event
-var Pieces=document.querySelectorAll(".piece");
-for (var i = 0; i < Pieces.length; i++) {
-    Pieces[i].addEventListener('click', function() {
-        view.selectAndHighlightPiece(this);
-    });
-}
+
+window.addEventListener("resize",function(){
+    view.setWindowHeightWidth(window.innerHeight,window.innerWidth);
+    view.createBoard(container);
+});
