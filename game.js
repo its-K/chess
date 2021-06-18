@@ -10,3 +10,11 @@ window.addEventListener("resize",function(){
     view.setWindowHeightWidth(window.innerHeight,window.innerWidth);
     view.createBoard(container);
 });
+
+function doCastling(targetPiece,sourcePiece){
+    view.doCastlingSwap(targetPiece,sourcePiece);
+}
+
+function doEnpassant(targetPos){
+    view.doEnpassantMove(targetPos);
+}

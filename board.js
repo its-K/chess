@@ -45,6 +45,7 @@ Board.prototype.moveSelectedPiece=function(i,j){
             if(this.selectedPiece.coinType=="King") this.selectedPiece.isMoved=true;
             if(this.selectedPiece.coinType=="Pawn") this.selectedPiece.noOfMoves+=1;
             
+            this.checkAndDoEnPassant(i,j);
             this.selectedPiece.position=[i,j];
             this.matrix[i+","+j]=this.selectedPiece;
             delete this.matrix[curPos[0]+","+curPos[1]];
@@ -72,7 +73,9 @@ Board.prototype.checkAndDoPawnPromotion=function(i,j,coin){
     if(this.matrix[i+","+j].coinType=="Pawn"){
         if(i==0 || i==7){
             var isWhite=this.matrix[i+","+j].isWhite();
-            this.matrix[i+","+j]=new coin(isWhite,[i,j]);
+            if(coin=="Queen") this.matrix[i+","+j]=new Queen(isWhite,[i,j]);
+            else if(coin=="Rook") this.matrix[i+","+j]=new Rook(isWhite,[i,j]);
+            else if(coin=="Bishop") this.matrix[i+","+j]=new Bishop(isWhite,[i,j]);
         }
     }
 }
@@ -84,6 +87,14 @@ Board.prototype.checkAndDoCastling=function(j){
         if(j==2){
             this.matrix[xpos+","+(ypos+1)]=this.matrix[xpos+","+(ypos-2)];
             delete this.matrix[xpos+","+(ypos-2)];
+            this.matrix[xpos+","+(ypos+1)].position=[xpos,ypos+1];
+            doCastling(this.matrix[xpos+","+(ypos+1)],[xpos,ypos-2]);
+        }
+        else if(j==6){
+            this.matrix[xpos+","+(ypos-1)]=this.matrix[xpos+","+(ypos+1)];
+            delete this.matrix[xpos+","+(ypos+1)];
+            this.matrix[xpos+","+(ypos-1)].position=[xpos,ypos-1];
+            doCastling(this.matrix[xpos+","+(ypos-1)],[xpos,ypos+1])
         }
     }
 }
@@ -93,11 +104,13 @@ Board.prototype.checkAndDoEnPassant=function(i,j){
         if(this.selectedPiece.isWhite()){
             if(this.selectedPiece.position[1]!=j && this.matrix[i+","+j]==undefined) {
                 delete this.matrix[(i+1)+","+(j)];
+                doEnpassant([i+1,j]);
             }
         }
         else{
             if(this.selectedPiece.position[1]!=j && this.matrix[i+","+j]==undefined) {
                 delete this.matrix[(i-1)+","+(j+1)];
+                doEnpassant([i-1,j+1]);
             }
         }
     }
@@ -106,5 +119,4 @@ Board.prototype.checkAndDoEnPassant=function(i,j){
 Board.prototype.checkSpecialMoves=function(i,j){
     this.checkAndDoPawnPromotion(i,j,"Queen");
     this.checkAndDoCastling(j);
-    this.checkAndDoEnPassant(i,j);
 }

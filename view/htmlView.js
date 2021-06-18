@@ -10,12 +10,12 @@ function HtmlGame(){
 HtmlGame.prototype.createBoard=function(container){
     this.container=container;
     this.calculateBoardSize();
-    this.container.innerHTML = `<div class="chessboard" style="height:${this.windowHeight}px;width:${this.windowWidth}px">`;
+    this.container.innerHTML = '<div class="chessboard" style="height:'+this.windowHeight+'px;width:'+this.windowWidth+'px">';
     var chessboard=document.querySelector('.chessboard');
     for(var i=0;i<8;i++){
         for(var j=0;j<8;j++){
             var color=((i+j)%2==0) ? "white":"black";
-            chessboard.insertAdjacentHTML('beforeend',`<div id="${i},${j}" class="${color} piece" style="height:${this.perBoxHeightWidth}px;width:${this.perBoxHeightWidth}px;font-size:${this.coinSize}px;"></div>`)
+            chessboard.insertAdjacentHTML('beforeend','<div id="'+i+','+j+'" class="'+color+' piece" style="height:'+this.perBoxHeightWidth+'px;width:'+this.perBoxHeightWidth+'px;font-size:'+this.coinSize+'px;"></div>')
         }
     }
     this.placePieces()
@@ -53,14 +53,14 @@ HtmlGame.prototype.setWindowHeightWidth=function(height,width){
     this.windowWidth=width;
 }
 
-HtmlGame.prototype.setPiece=function(element){
-    var piece=getPieceUrl(element.coinType,element.isWhite());
-    var pos=element.position;
-    document.getElementById(`${pos[0]},${pos[1]}`).textContent=piece;
+HtmlGame.prototype.setPiece=function(coin){
+    var piece=getPieceUrl(coin.coinType,coin.isWhite());
+    var pos=coin.position;
+    document.getElementById(pos[0]+","+pos[1]).textContent=piece;
 }
 
 HtmlGame.prototype.removePiece=function(i,j){
-    var piece=document.getElementById(`${i},${j}`)
+    var piece=document.getElementById(i+","+j);
     piece.classList.remove("highlight");
     piece.innerHTML="";
 }
@@ -88,7 +88,7 @@ HtmlGame.prototype.selectAndHighlightPiece=function(piece){
 HtmlGame.prototype.highlightPossibleMoves=function(possibleMoves){
     for (var i = 0; i < possibleMoves.length; i++) {
         var move=possibleMoves[i];
-        var pieces=document.getElementById(""+move[0]+","+move[1]);
+        var pieces=document.getElementById(move[0]+","+move[1]);
         pieces.classList.add("highlight");
     }
 }
@@ -96,15 +96,14 @@ HtmlGame.prototype.highlightPossibleMoves=function(possibleMoves){
 HtmlGame.prototype.removeHighlightedMoves=function(possibleMoves){
     for (var i = 0; i < possibleMoves.length; i++) {
         var move=possibleMoves[i];
-        var Pieces=document.getElementById(""+move[0]+","+move[1]);
+        var Pieces=document.getElementById(move[0]+","+move[1]);
         Pieces.classList.remove("highlight");
     }
 }
 
 HtmlGame.prototype.movePiece=function(targetPiece,sourcePiece,sourcePossibleMoves){
     var pos=targetPiece.id.split(",");
-    console.log(sourcePiece)
-    if(game.moveSelectedPiece(Number(pos[0]),Number(pos[1]))){
+    if(game.moveSelectedPiece(parseInt(pos[0]),parseInt(pos[1]))){
         this.removeHighlightedMoves(sourcePossibleMoves)
         var element=game.matrix[targetPiece.id]
         this.setPiece(element);
@@ -126,4 +125,13 @@ HtmlGame.prototype.attachListeners=function(){
             
         });
     }
+}
+
+HtmlGame.prototype.doCastlingSwap=function(targetPiece,sourcePos){
+    this.setPiece(targetPiece);
+    this.removePiece(sourcePos[0],sourcePos[1]);
+}
+
+HtmlGame.prototype.doEnpassantMove=function(targetPos){
+    this.removePiece(targetPos[0],targetPos[1]);
 }
