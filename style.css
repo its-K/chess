@@ -17,3 +17,10 @@
     display: table-cell;
     vertical-align:middle;
 }
+.highlight {
+    float: left;
+    background-color: rgb(191, 255, 118);
+    text-align:center;
+    display: table-cell;
+    vertical-align:middle;
+}

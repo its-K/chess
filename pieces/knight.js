@@ -13,7 +13,7 @@ Knight.prototype.getPossibleMoves=function(){
     return moves;
 }
 
-Knight.prototype.getPossibleLSpots=function(moves,i,j){l
+Knight.prototype.getPossibleLSpots=function(moves,i,j){
     if(i+2<8 && j+1<8){
         if(game.matrix[(i+2)+","+(j+1)]==undefined || game.matrix[((i+2)+","+(j+1))].isWhite()!=game.matrix[(i+","+j)].isWhite()){
             if(this.checkMoveValid(i+2,j+1)) moves.push([i+2,j+1]);

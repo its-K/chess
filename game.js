@@ -6,3 +6,12 @@ window.addEventListener("resize",function(){
 });
 
 var view=new HtmlGame();
+view.createBoard();
+
+//for adding click event
+var Pieces=document.querySelectorAll(".piece");
+for (var i = 0; i < Pieces.length; i++) {
+    Pieces[i].addEventListener('click', function() {
+        view.selectAndHighlightPiece(this);
+    });
+}

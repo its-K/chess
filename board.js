@@ -31,7 +31,9 @@ Board.prototype.selectPiece=function(i,j){
     if(this.matrix[i+","+j]!=undefined && this.matrix[i+","+j].isWhite()==this.curPlayerIsWhite){
         this.selectedPiece=this.matrix[i+","+j];
         console.log("Coin selected");
+        return true;
     }
+    return false;
 }
 
 Board.prototype.moveSelectedPiece=function(i,j){
@@ -55,7 +57,11 @@ Board.prototype.moveSelectedPiece=function(i,j){
             this.curPlayerIsWhite=!this.curPlayerIsWhite;
         }
     });
-    if(!isPieceMoved) alert("Move not possible");
+    if(!isPieceMoved){
+        alert("Move not possible");
+        return false;
+    }
+    return isPieceMoved;
 }
 
 Board.prototype.clearSelectedPiece=function(){
