@@ -1,5 +1,6 @@
 
 var game=new Board();
+game.initializeGame();
 var container = document.querySelector("#chessContainer");
 
 var view=new HtmlGame();

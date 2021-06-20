@@ -3,6 +3,11 @@ function Board(){
     this.matrix={};
     this.selectedPiece;
     this.curPlayerIsWhite=true;
+    this.savedMoves=[];
+    this.noOfMovesDone=0;
+}
+
+Board.prototype.initializeGame=function(){
     //black coins
     this.matrix[0+","+0]=new Rook(false,[0,0]);
     this.matrix[0+","+1]=new Knight(false,[0,1]);
@@ -24,7 +29,6 @@ function Board(){
     this.matrix[7+","+6]=new Knight(true,[7,6]);
     this.matrix[7+","+7]=new Rook(true,[7,7]);
     for(var i=0;i<8;i++) this.matrix[6+","+i]=new Pawn(true,[6,i]);
-    
 }
 
 Board.prototype.selectPiece=function(i,j){
@@ -42,6 +46,8 @@ Board.prototype.moveSelectedPiece=function(i,j){
     var isPieceMoved=false;
     possibleMoves.forEach(move => {
         if(move[0]==i && move[1]==j){
+            this.storeMoves([i,j],this.selectedPiece);
+
             if(this.selectedPiece.coinType=="King") this.selectedPiece.isMoved=true;
             if(this.selectedPiece.coinType=="Pawn") this.selectedPiece.noOfMoves+=1;
             
@@ -109,8 +115,8 @@ Board.prototype.checkAndDoEnPassant=function(i,j){
         }
         else{
             if(this.selectedPiece.position[1]!=j && this.matrix[i+","+j]==undefined) {
-                delete this.matrix[(i-1)+","+(j+1)];
-                doEnpassant([i-1,j+1]);
+                delete this.matrix[(i-1)+","+(j)];
+                doEnpassant([i-1,j]);
             }
         }
     }
@@ -119,4 +125,71 @@ Board.prototype.checkAndDoEnPassant=function(i,j){
 Board.prototype.checkSpecialMoves=function(i,j){
     this.checkAndDoPawnPromotion(i,j,"Queen");
     this.checkAndDoCastling(j);
+}
+
+Board.prototype.storeMoves=function(targetPos,sourcePiece){
+    targetPiece=this.matrix[targetPos[0]+","+targetPos[1]];
+    if(targetPiece!=undefined){
+        var move=new Move(targetPos,targetPiece.coinType,targetPiece.isWhite(),sourcePiece.position,sourcePiece.coinType,sourcePiece.isWhite());
+    }
+    else{
+        var move=new Move(targetPos,undefined,undefined,sourcePiece.position,sourcePiece.coinType,sourcePiece.isWhite());
+    }
+    this.savedMoves.push(move);
+    this.noOfMovesDone+=1;
+}
+
+Board.prototype.redoMove=function(){
+    if(this.savedMoves[this.noOfMovesDone]!=undefined){
+        var move=this.savedMoves[this.noOfMovesDone];
+        var targetPiece=this.createPiece(move.sourceCoinType,move.isSourcePieceWhite,move.targetPosition);
+        var tPos=move.targetPosition;
+        var sPos=move.sourcePosition;
+        this.matrix[tPos[0]+","+tPos[1]]=targetPiece;
+        delete this.matrix[sPos[0]+","+sPos[1]];
+        this.noOfMovesDone+=1;
+        return true;
+    }
+    return false;
+}
+
+Board.prototype.undoMove=function(){
+    if(this.noOfMovesDone>0){
+        this.noOfMovesDone-=1;
+        var move=this.savedMoves[this.noOfMovesDone];
+        var targetPiece=this.createPiece(move.sourceCoinType,move.isSourcePieceWhite,move.sourcePosition);
+        tPos=move.sourcePosition;
+        sPos=move.targetPosition;
+        this.matrix[tPos[0]+","+tPos[1]]=targetPiece;
+        if(move.targetCoinType==undefined){
+            delete this.matrix[sPos[0]+","+sPos[1]];
+        }
+        else{
+            var sourcePiece=this.createPiece(move.targetCoinType,move.isTargetPieceWhite,move.targetPosition);
+            this.matrix[sPos[0]+","+sPos[1]]=sourcePiece;
+        }
+        return true;
+    }
+    return false;
+}
+
+Board.prototype.createPiece=function(coinType,isWhite,position){
+    if(coinType=="King"){
+        return new King(isWhite,position);
+    }
+    else if(coinType=="Queen"){
+        return new Queen(isWhite,position);
+    }
+    else if(coinType=="Bishop"){
+        return new Bishop(isWhite,position);
+    }
+    else if(coinType=="Knight"){
+        return new Knight(isWhite,position);
+    }
+    else if(coinType=="Rook"){
+        return new Rook(isWhite,position);
+    }
+    else if(coinType=="Pawn"){
+        return new Pawn(isWhite,position);
+    }
 }
