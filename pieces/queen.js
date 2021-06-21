@@ -1,7 +1,7 @@
 
 function Queen(type,position){
     Piece.call(this,type);
-    this.coinType="Queen";
+    this.coinType=COIN_TYPE.QUEEN;
     this.position=position;
 }
 Queen.prototype.getPossibleMoves=function(){

@@ -1,7 +1,7 @@
 
 function King(type,position){
     Piece.call(this,type);
-    this.coinType="King";
+    this.coinType=COIN_TYPE.KING;
     this.position=position;
     this.isMoved=false;
     this.isCastingAllowed=false;

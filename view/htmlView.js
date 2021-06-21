@@ -18,6 +18,7 @@ HtmlGame.prototype.createBoard=function(container){
             chessboard.insertAdjacentHTML('beforeend','<div id="'+i+','+j+'" class="'+color+' piece" style="height:'+this.perBoxHeightWidth+'px;width:'+this.perBoxHeightWidth+'px;font-size:'+this.coinSize+'px;"></div>')
         }
     }
+    chessboard.insertAdjacentHTML('beforeend','<button style="margin-left:45%;margin-top:10px" onclick="game.undoMove()">Undo</button> <button onclick="game.redoMove()">Redo</button>');
     this.placePieces()
     this.attachListeners();
 }

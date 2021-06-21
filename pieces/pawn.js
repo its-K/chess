@@ -1,7 +1,7 @@
 
 function Pawn(type,position){
     Piece.call(this,type);
-    this.coinType="Pawn";
+    this.coinType=COIN_TYPE.PAWN;
     this.position=position;
     this.isEnPassantAllowed=false;
     this.noOfMoves=0;

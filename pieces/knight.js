@@ -1,7 +1,7 @@
 
 function Knight(type,position){
     Piece.call(this,type);
-    this.coinType="Knight";
+    this.coinType=COIN_TYPE.KNIGHT;
     this.position=position;
 }
 

@@ -3,7 +3,7 @@ var game=new Board();
 game.initializeGame();
 var container = document.querySelector("#chessContainer");
 
-var view=new HtmlGame();
+var view=new CanvasGame();
 view.createBoard(container);
 
 
@@ -13,17 +13,17 @@ window.addEventListener("resize",function(){
 });
 
 function doCastling(targetPiece,sourcePiece){
-    view.doCastlingSwap(targetPiece,sourcePiece);
+    view.createBoard(container);
 }
 
 function doEnpassant(targetPos){
-    view.doEnpassantMove(targetPos);
+    view.createBoard(container);
 }
 
 function setPiece(targetPiece){
-    view.setPiece(targetPiece);
+    view.createBoard(container);
 }
 
 function removePiece(i,j){
-    view.removePiece(i,j);
+    view.createBoard(container);
 }

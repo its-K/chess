@@ -5,4 +5,17 @@ function Move(targetPos,tarpetCoinType,isTargetPieceWhite,sourcePos,sourceCoinTy
     this.sourcePosition=sourcePos;
     this.sourceCoinType=sourceCoinType;
     this.isSourcePieceWhite=isSourcePieceWhite;
+    this.isCastling=false;
+    this.isEnPassant=false;
+}
+
+Move.prototype.castlingMove={
+    rookSourcePosition:undefined,
+    rookIsWhite:false,
+    rookTargetPosition:undefined
+}
+
+Move.prototype.enPassantMove={
+    pawnSourcePosition:undefined,
+    pawnIsWhite:false
 }

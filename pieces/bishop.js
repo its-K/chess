@@ -1,7 +1,7 @@
 
 function Bishop(type,position){
     Piece.call(this,type);
-    this.coinType="Bishop";
+    this.coinType=COIN_TYPE.BISHOP;
     this.position=position;
 }
 Bishop.prototype.getPossibleMoves=function(){

@@ -1,7 +1,7 @@
 
 function Rook(type,position){
     Piece.call(this,type);
-    this.coinType="Rook";
+    this.coinType=COIN_TYPE.ROOK;
     this.position=position;
 }
 Rook.prototype.getPossibleMoves=function(){

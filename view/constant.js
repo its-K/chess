@@ -11,23 +11,28 @@ var blackRook="♜";
 var whitePawn="♙";
 var blackPawn="♟";
 
+var COIN_TYPE={
+    KING : "King",
+    QUEEN : "Queen",
+    PAWN : "Pawn",
+    ROOK : "Rook",
+    BISHOP : "Bishop",
+    KNIGHT : "Knight"
+}
+
 function getPieceUrl(type,isWhite){
-    if(type=="Pawn"){
-        return (isWhite)? whitePawn:blackPawn;
-    }
-    else if (type=="Rook"){
-        return (isWhite)? whiteRook:blackRook;
-    }
-    else if (type=="Knight"){
-        return (isWhite)? whiteKnight:blackKnight;
-    }
-    else if (type=="Bishop"){
-        return (isWhite)? whiteBishop:blackBishop;
-    }
-    else if (type=="Queen"){
-        return (isWhite)? whiteQueen:blackQueen;
-    }
-    else if (type=="King"){
-        return (isWhite)? whiteKing:blackKing;
+    switch (type) {
+        case COIN_TYPE.PAWN:
+            return (isWhite)? whitePawn:blackPawn;
+        case COIN_TYPE.ROOK:
+            return (isWhite)? whiteRook:blackRook;
+        case COIN_TYPE.KNIGHT:
+            return (isWhite)? whiteKnight:blackKnight;
+        case COIN_TYPE.BISHOP:
+            return (isWhite)? whiteBishop:blackBishop;
+        case COIN_TYPE.QUEEN:
+            return (isWhite)? whiteQueen:blackQueen;
+        case COIN_TYPE.KING:
+            return (isWhite)? whiteKing:blackKing;
     }
 }
